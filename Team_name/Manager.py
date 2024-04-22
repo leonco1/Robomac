@@ -1,3 +1,7 @@
+import os
+import numpy as np
+import time
+from math import atan2
 # Choose names for your players and team
     # Choose a funny name for each player and your team
     # Use names written only in cyrillic
@@ -9,26 +13,49 @@ def team_properties():
     properties['team_name'] = "Мак Челзи"
     properties['player_names'] = player_names
     properties['image_name'] = 'Red.png' # use image resolution 153x153
-    properties['weight_points'] = (9, 10, 15)
-    properties['radius_points'] = (5, 10, 20)
-    properties['max_acceleration_points'] = (40, 10, 15)
-    properties['max_speed_points'] = (40, 10, 25)
-    properties['shot_power_points'] = (18, 20, 13)
+    properties['weight_points'] = (90, 1, 15)
+    properties['radius_points'] = (5, 100, 20)
+    properties['max_acceleration_points'] = (40, 1, 15)
+    properties['max_speed_points'] = (40, 1, 25)
+    properties['shot_power_points'] = (18, 2, 13)
     return properties
 
 # This function gathers game information and controls each one of your three players
 def decision(our_team, their_team, ball, your_side, half, time_left, our_score, their_score):
     manager_decision = [dict(), dict(), dict()]
     for i in range(3):
+        player = our_team[i]
+        # One player (Б) will chase the ball, while others will default to the base decision.
+        if i == 0:
+
+            # Determine the direction towards the ball
+            direction_to_ball = (ball['x'] - player['x'], ball['y'] - player['y'])
+            # Calculate the angle between the player and the ball
+            angle_to_ball = atan2(direction_to_ball[1], direction_to_ball[0])
+            manager_decision[i]['alpha'] = angle_to_ball
+
+            manager_decision[i]['force'] = player['a_max']*player["mass"]
+            
+            manager_decision[i]['shot_request'] = True
+            manager_decision[i]['shot_power'] = player['shot_power_max']
+
+            #LEFT GOAL
+
+                #Upper post 50, 343 
+                #Lower post 50, 578
+
+            #RIGHT GOAL
+
+                #Upper post 718, 343
+                #Lower post 718, 578
+
         
-        # python dictionary with the following keys: 'x', 'y', 'alpha', 'mass', 'radius', 'a_max', 'v_max', 'shot_power_max'
-        player = our_team[i] # gather information about each one of your players eg. position
-        manager_decision[i]['alpha'] = player['alpha'] # player['alpha'] # choose direction for running (0, 2*pi)
-        manager_decision[i]['force'] = 0 # accelerate or deaccelerate your player up to 'v_max' or 0: (-0.5 * 'a_max' * 'mass', 'a_max' * 'mass')
-        manager_decision[i]['shot_request'] = True # choose if you want to shoot
-        manager_decision[i]['shot_power'] = 100 # use different shot power: (0, 'shot_power_max')
-    # print(our_score, their_score)
-    # print(our_team[0]['weight'], our_team[0]['radius'], our_team[0]['max_acceleration'], our_team[0]['max_speed'], our_team[0]['shot_power'])
-    # print(their_team[0]['weight'], their_team[0]['radius'], their_team[0]['max_acceleration'], their_team[0]['max_speed'], their_team[0]['shot_power'])
-    
+            
+        else:
+            # For other players, just use default behavior
+            manager_decision[i]['alpha'] = player['alpha']
+            manager_decision[i]['force'] = 0
+            manager_decision[i]['shot_request'] = True
+            manager_decision[i]['shot_power'] = player['shot_power_max']
+            
     return manager_decision

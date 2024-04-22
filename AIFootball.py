@@ -698,3 +698,4 @@ if __name__ == "__main__":
     blue_logo = pygame.image.load(os.getcwd() + '\\Test_team\\' + team_2_properties['image_name'])
     logos = {team_1_properties['team_name']: red_logo, team_2_properties['team_name']: blue_logo}
     game(team_1, team_2, the_ball, the_posts, team_1_properties['team_name'], team_2_properties['team_name'], red, blue, team_1_script, team_2_script)
+    
