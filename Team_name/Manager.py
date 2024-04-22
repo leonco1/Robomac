@@ -5,7 +5,7 @@
     # Don't use profanity!!!
 def team_properties():
     properties = dict()
-    player_names = ["Пандевалдо", "Панчевалдо", "Елмасалдо"]
+    player_names = ["Б", "Л", "Г"]
     properties['team_name'] = "Мак Челзи"
     properties['player_names'] = player_names
     properties['image_name'] = 'Red.png' # use image resolution 153x153

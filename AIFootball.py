@@ -54,8 +54,8 @@ player_player_restitution = 0.5
 ball_restitution_under_player_control = 0.4
 player_post_restitution = 0.5
 half_time_duration = 45
-short_pause_countdown_time = 5
-goal_pause_countdown_time = 5
+short_pause_countdown_time = 0
+goal_pause_countdown_time = 0
 
 shift = 230
 team_left_logo_position = [22 + shift, 2, 153, 153]
@@ -113,7 +113,7 @@ def get_speed(points):
 
 def get_shot_power(points):
     if points <= 20:
-        return 10 + 3 * points
+        return 10 + 2.5 * points
     elif points <= 30:
         return 20 + 2 * points
     elif points <= 40:
