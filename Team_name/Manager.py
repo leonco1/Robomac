@@ -85,7 +85,7 @@ def make_striker(ball, i, manager_decision, player):
     # Calculate the angle between the player and the ball
     angle_to_ball = atan2(direction_to_ball[1], direction_to_ball[0])
     manager_decision[i]['alpha'] = angle_to_ball
-    manager_decision[i]['force'] = player['a_max']
+    manager_decision[i]['force'] = player['a_max']*player['mass']
     manager_decision[i]['shot_request'] = False
     manager_decision[i]['shot_power'] = player['shot_power_max']
 
@@ -101,14 +101,14 @@ def check_if_collision_with_opponents(player, their_team):
     return False
 
 
-def check_if_within_square(x, y, x1, y1):
+def calculate_eucledian_distance_for_circle(x, y, x1, y1):
     return ((x - x1) ** 2 + (y - y1) ** 2) ** 0.5
 
 
 def check_if_any_side_collides(player, opponent):
-    d = check_if_within_square(player['x'], player['y'], opponent['x'], opponent['y'])
+    d = calculate_eucledian_distance_for_circle(player['x'], player['y'], opponent['x'], opponent['y'])
     print(d, player['radius'], opponent['radius'])
-    if d <= player['radius'] * 1.4 +opponent['radius']*1.4 + 15:
+    if d <= player['radius'] * 1.4 + opponent['radius'] * 1.4 + 15:
         return True
     return False
 
