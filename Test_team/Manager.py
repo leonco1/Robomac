@@ -343,7 +343,9 @@ def decision(our_team, their_team, ball, your_side, half, time_left, our_score, 
                 manage_goalkeeper_right(ball, your_side, manager_decision, i, player, dist_ball, their_team)
 
             elif i == 2: 
+
                 dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
+                striker_dist_to_ball = ((our_team[0]['x'] - ball['x'])**2 + (our_team[0]['y'] - ball['y'])**2)**0.5 - 15 - our_team[0]['radius']
                 if ball['x'] > 1266 and player['x'] > ball['x']:
                     # If the ball is under certain other coordinates and the player is in a specific area
                     run_keeper_to_ball_and_shoot(player, i, manager_decision, dist_ball, ball, your_side)
@@ -355,6 +357,20 @@ def decision(our_team, their_team, ball, your_side, half, time_left, our_score, 
                     # If the ball is under certain coordinates
                     target_x, target_y = 1316, middle_of_playground - 50
                     run_player_to_target(player, i, manager_decision, target_x, target_y, ball, their_team, your_side)
+                                # While attacking, and striker is fighting for the ball on the bottom    
+                elif ball['x'] < 300 and ball['y'] > middle_of_playground and our_team[0]['y']>middle_of_playground and striker_dist_to_ball <= 100: 
+                    dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
+                    target_x, target_y = 200 , 300
+                    run_player_to_target(player, i, manager_decision, target_x, target_y, ball, their_team, your_side)
+                    if dist_ball <= 100:
+                        run_player_to_ball_and_shoot(player, i, manager_decision, dist_ball, ball, your_side) 
+                # While attacking, and striker is fighting for the ball on the top 
+                elif ball['x'] < 300 and ball['y'] < middle_of_playground and our_team[0]['y']<middle_of_playground and striker_dist_to_ball <= 100: 
+                    dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
+                    target_x, target_y = 200 , 500
+                    run_player_to_target(player, i, manager_decision, target_x, target_y, ball, their_team, your_side)
+                    if dist_ball <= 100:
+                        run_player_to_ball_and_shoot(player, i, manager_decision, dist_ball, ball, your_side)   
                 else:
                     dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
                     target_x, target_y = find_coordinates_for_straight_shot(ball, left_goal_upper, player, your_side)
