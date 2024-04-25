@@ -32,6 +32,23 @@ def team_properties():
     properties['shot_power_points'] = (18, 55, 13)
     return properties
 
+def divide_allies(player1, player2, manager_decision):
+    manager_decision[0]['force'] = player1['a_max'] * player1["mass"]
+    manager_decision[2]['force'] = player2['a_max'] * player2["mass"]
+    if player1['y'] > player2['y']:
+        manager_decision[0]['alpha'] = (np.pi/2) 
+        manager_decision[2]['alpha'] = -(np.pi/2) 
+    else:
+        manager_decision[0]['alpha'] = -(np.pi/2) 
+        manager_decision[2]['alpha'] = (np.pi/2) 
+
+        
+
+def check_if_two_players_collide(player1, player2):
+    d = calculate_eucledian_distance_for_circle(player1['x'], player1['y'], player2['x'], player2['y'])
+    if d <= player1['radius'] * 1.5 + player2['radius']:
+        return True
+    return False
 
 def get_proximity_to_wall(wall, radius_player):
     return abs(wall - radius_player)
@@ -215,8 +232,6 @@ def run_player_to_ball_and_shoot(player, i, manager_decision, dist_ball, ball, y
     manager_decision[i]['force'] = player['a_max'] * player["mass"]
 
 
-import math
-
 def find_coordinates_for_straight_shot(ball, goal_post, player, your_side):
     
     if your_side == 'left':
@@ -253,7 +268,10 @@ def find_coordinates_for_straight_shot(ball, goal_post, player, your_side):
     return new_x, new_y
 
 
-# def attack(player, i, ball, their_team, your_side):
+def run_after_fastest(player, i, manager_decision, their_team, ball):
+    target_angle = math.atan2(their_team[0]['y'] - player['y'], their_team[0]['x'] - player['x'])
+    manager_decision[i]['alpha'] = target_angle
+    manager_decision[i]['force'] = player['a_max'] * player["mass"]
 
 
 # This function gathers game information and controls each one of your three players
@@ -269,6 +287,13 @@ def decision(our_team, their_team, ball, your_side, half, time_left, our_score, 
 
             
             if i == 0:
+                
+                dist_to_teammate = ((player['x'] - our_team[2]['x'])**2 + (player['y'] - our_team[2]['y'])**2)**0.5 - our_team[2]['radius'] - player['radius']
+                if dist_to_teammate<5:
+                    divide_allies(player,our_team[2],manager_decision)
+                    continue
+
+
                 dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
                 if(player['y']>middle_of_playground):
                     target_x, target_y = find_coordinates_for_straight_shot(ball, right_goal_upper, player, your_side)
@@ -329,6 +354,14 @@ def decision(our_team, their_team, ball, your_side, half, time_left, our_score, 
 
             
             if i == 0:
+
+
+                dist_to_teammate = ((player['x'] - our_team[2]['x'])**2 + (player['y'] - our_team[2]['y'])**2)**0.5 - our_team[2]['radius'] - player['radius']
+                if dist_to_teammate<5:
+                    divide_allies(player,our_team[2],manager_decision)
+                    continue
+
+
                 dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
                 if(player['y']>middle_of_playground):
                     target_x, target_y = find_coordinates_for_straight_shot(ball, left_goal_upper, player, your_side)
