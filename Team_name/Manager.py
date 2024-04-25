@@ -187,7 +187,7 @@ def run_keeper_to_ball_and_shoot(player,i,manager_decision,dist_ball,ball,your_s
         manager_decision[i]['shot_request'] = True
 
 def manage_goalkeeper_left(ball, your_side, manager_decision, i, player, dist_ball, their_team):
-    if ball['x'] < 300:
+    if ball['x'] < 300 and (ball['y'] >= 303 and ball['y'] <= 613):
         # If the ball is under certain other coordinates and the player is in a specific area
         run_keeper_to_ball_and_shoot(player, i, manager_decision, dist_ball, ball, your_side)
     elif ball['x'] < 400 and ball['y'] < middle_of_playground:
@@ -204,7 +204,7 @@ def manage_goalkeeper_left(ball, your_side, manager_decision, i, player, dist_ba
         run_player_to_target(player, i, manager_decision, target_x, target_y, ball, their_team, your_side)
 
 def manage_goalkeeper_right(ball, your_side, manager_decision, i, player, dist_ball, their_team):
-    if ball['x'] > 950:
+    if ball['x'] > 950 and (ball['y'] >= 303 and ball['y'] <= 613):
         # If the ball is under certain other coordinates and the player is in a specific area
         run_keeper_to_ball_and_shoot(player, i, manager_decision, dist_ball, ball, your_side)
     elif ball['x'] > 1050 and ball['y'] < middle_of_playground:
@@ -354,7 +354,6 @@ def decision(our_team, their_team, ball, your_side, half, time_left, our_score, 
 
             
             if i == 0:
-
 
                 dist_to_teammate = ((player['x'] - our_team[2]['x'])**2 + (player['y'] - our_team[2]['y'])**2)**0.5 - our_team[2]['radius'] - player['radius']
                 if dist_to_teammate<5:
