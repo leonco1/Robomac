@@ -187,7 +187,7 @@ def run_keeper_to_ball_and_shoot(player,i,manager_decision,dist_ball,ball,your_s
         manager_decision[i]['shot_request'] = True
 
 def manage_goalkeeper_left(ball, your_side, manager_decision, i, player, dist_ball, their_team):
-    if ball['x'] < 300:
+    if ball['x'] < 300 and (ball['y'] >= 303 and ball['y'] <= 613):
         # If the ball is under certain other coordinates and the player is in a specific area
         run_keeper_to_ball_and_shoot(player, i, manager_decision, dist_ball, ball, your_side)
     elif ball['x'] < 400 and ball['y'] < middle_of_playground:
@@ -204,7 +204,7 @@ def manage_goalkeeper_left(ball, your_side, manager_decision, i, player, dist_ba
         run_player_to_target(player, i, manager_decision, target_x, target_y, ball, their_team, your_side)
 
 def manage_goalkeeper_right(ball, your_side, manager_decision, i, player, dist_ball, their_team):
-    if ball['x'] > 950:
+    if ball['x'] > 950 and (ball['y'] >= 303 and ball['y'] <= 613):
         # If the ball is under certain other coordinates and the player is in a specific area
         run_keeper_to_ball_and_shoot(player, i, manager_decision, dist_ball, ball, your_side)
     elif ball['x'] > 1050 and ball['y'] < middle_of_playground:
@@ -231,8 +231,6 @@ def run_player_to_ball_and_shoot(player, i, manager_decision, dist_ball, ball, y
     manager_decision[i]['alpha'] = target_angle
     manager_decision[i]['force'] = player['a_max'] * player["mass"]
 
-
-import math
 
 def find_coordinates_for_straight_shot(ball, goal_post, player, your_side):
     
@@ -270,7 +268,10 @@ def find_coordinates_for_straight_shot(ball, goal_post, player, your_side):
     return new_x, new_y
 
 
-# def attack(player, i, ball, their_team, your_side):
+def run_after_fastest(player, i, manager_decision, their_team, ball):
+    target_angle = math.atan2(their_team[0]['y'] - player['y'], their_team[0]['x'] - player['x'])
+    manager_decision[i]['alpha'] = target_angle
+    manager_decision[i]['force'] = player['a_max'] * player["mass"]
 
 
 # This function gathers game information and controls each one of your three players
@@ -354,13 +355,12 @@ def decision(our_team, their_team, ball, your_side, half, time_left, our_score, 
             
             if i == 0:
 
-
                 dist_to_teammate = ((player['x'] - our_team[2]['x'])**2 + (player['y'] - our_team[2]['y'])**2)**0.5 - our_team[2]['radius'] - player['radius']
                 if dist_to_teammate<5:
                     divide_allies(player,our_team[2],manager_decision)
                     continue
 
-                
+
                 dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
                 if(player['y']>middle_of_playground):
                     target_x, target_y = find_coordinates_for_straight_shot(ball, left_goal_upper, player, your_side)
