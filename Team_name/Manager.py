@@ -108,20 +108,20 @@ def check_if_ball_is_correct_side(ball, player, your_side):
     if your_side == 'left':
         if player['x'] >= ball['x']:
             if player['y'] - upper_wall * 1.5 <= 10:
-                return -np.pi / 4
+                return np.pi / 4
             elif lower_wall - player['y'] * 1.5 <= 10:
-                return np.pi / 4
+                return -np.pi / 4
             else:
-                return np.pi / 4
+                return -np.pi / 4
         else:
             return player['alpha']
     if your_side == 'right':
         if player['x'] <= ball['x']:
             if player['y'] - upper_wall * 1.5 <= 10:
-                return np.pi / 4
-            elif lower_wall - player['y'] * 1.5 <= 10:
                 return -np.pi / 4
-            return -np.pi / 4
+            elif lower_wall - player['y'] * 1.5 <= 10:
+                return np.pi / 4
+            return np.pi / 4
         else:
             return player['alpha']
 
