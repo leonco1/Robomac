@@ -27,9 +27,9 @@ def team_properties():
     properties['image_name'] = 'pobeda.png' # use image resolution 153x153
     properties['weight_points'] = (0, 40, 0)
     properties['radius_points'] = (10, 10, 0)
-    properties['max_acceleration_points'] = (40, 40, 30)
-    properties['max_speed_points'] = (40, 10, 25)
-    properties['shot_power_points'] = (30, 20, 15)
+    properties['max_acceleration_points'] = (40, 30, 30)
+    properties['max_speed_points'] = (25, 10, 20)
+    properties['shot_power_points'] = (15, 15, 25)
     return properties
 
 def divide_allies(player1, player2, manager_decision):
