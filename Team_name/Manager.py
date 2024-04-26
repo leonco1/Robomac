@@ -12,10 +12,10 @@ from math import atan2
 lower_wall = 718
 upper_wall = 204
 # Goal posts coordinates
-left_goal_upper = (50, 383) # not actual value, but place to shoot.
-left_goal_lower = (50, 538)
-right_goal_upper = (1316, 383)
-right_goal_lower = (1316, 538)
+left_goal_upper = (50, 413) # not actual value, but place to shoot.
+left_goal_lower = (50, 508)
+right_goal_upper = (1316, 413)
+right_goal_lower = (1316, 503)
 middle_of_playground = 460.5
 left_goal_area = [350, 150, 560, 50] # North East South West
 
