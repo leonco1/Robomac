@@ -287,14 +287,13 @@ def decision(our_team, their_team, ball, your_side, half, time_left, our_score, 
 
             
             if i == 0:
+                dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
                 
                 dist_to_teammate = ((player['x'] - our_team[2]['x'])**2 + (player['y'] - our_team[2]['y'])**2)**0.5 - our_team[2]['radius'] - player['radius']
                 if dist_to_teammate<5:
                     divide_allies(player,our_team[2],manager_decision)
                     continue
-
-
-                dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
+               
                 if(player['y']>middle_of_playground):
                     target_x, target_y = find_coordinates_for_straight_shot(ball, right_goal_upper, player, your_side)
                 else:
@@ -361,13 +360,13 @@ def decision(our_team, their_team, ball, your_side, half, time_left, our_score, 
             
             if i == 0:
 
+                dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
+                
                 dist_to_teammate = ((player['x'] - our_team[2]['x'])**2 + (player['y'] - our_team[2]['y'])**2)**0.5 - our_team[2]['radius'] - player['radius']
                 if dist_to_teammate<5:
                     divide_allies(player,our_team[2],manager_decision)
                     continue
 
-
-                dist_ball = ((player['x'] - ball['x'])**2 + (player['y'] - ball['y'])**2)**0.5 - 15 - player['radius']
                 if(player['y']>middle_of_playground):
                     target_x, target_y = find_coordinates_for_straight_shot(ball, left_goal_lower, player, your_side)
                 else:
