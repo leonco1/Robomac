@@ -107,21 +107,21 @@ def has_ball(player, ball):
 def check_if_ball_is_correct_side(ball, player, your_side):
     if your_side == 'left':
         if player['x'] >= ball['x']:
-            if player['y']-upper_wall<=10:
-                return -np.pi
-            elif lower_wall-player['y']<=10:
-                return np.pi
+            if player['y'] - upper_wall * 1.5 <= 10:
+                return -2 * np.pi
+            elif lower_wall - player['y'] * 1.5 <= 10:
+                return 2 * np.pi
             else:
-                return np.pi
+                return 2 * np.pi
         else:
             return player['alpha']
     if your_side == 'right':
         if player['x'] <= ball['x']:
-            if player['y'] - upper_wall <= 10:
-                return 2*np.pi
-            elif lower_wall - player['y'] <= 10:
-                return -2*np.pi
-            return -2*np.pi
+            if player['y'] - upper_wall * 1.5 <= 10:
+                return 2 * np.pi
+            elif lower_wall - player['y'] * 1.5 <= 10:
+                return -2 * np.pi
+            return -2 * np.pi
         else:
             return player['alpha']
 
