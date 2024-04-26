@@ -108,37 +108,37 @@ def check_if_ball_is_correct_side(ball, player, your_side):
     if your_side == 'left':
         if player['x'] >= ball['x']:
             if player['y'] - upper_wall * 1.5 <= 10:
-                return np.pi
+                return -np.pi / 4
             elif lower_wall - player['y'] * 1.5 <= 10:
-                return -np.pi
+                return np.pi / 4
             else:
-                return -np.pi
+                return np.pi / 4
         else:
             return player['alpha']
     if your_side == 'right':
         if player['x'] <= ball['x']:
             if player['y'] - upper_wall * 1.5 <= 10:
-                return np.pi
+                return np.pi / 4
             elif lower_wall - player['y'] * 1.5 <= 10:
-                return -np.pi
-            return -np.pi
+                return -np.pi / 4
+            return -np.pi / 4
         else:
             return player['alpha']
 
 def run_player_to_target(player, i, manager_decision, target_x, target_y, ball, their_team, your_side):
     if has_ball(player, ball):
         manager_decision[i]['force'] = player['a_max'] * player["mass"]  # Maximum acceleration to move quickly
-        manager_decision[i]['alpha'] = 2 * np.pi - check_if_ball_is_correct_side(ball, player, your_side)
+        manager_decision[i]['alpha'] = player['alpha'] + check_if_ball_is_correct_side(ball, player, your_side)
         opponent = check_if_collision_with_opponents(player, their_team, ball)
         if check_if_collision_with_opponents(player, their_team, ball):
             manager_decision[i]['alpha'] = 2*np.pi + dribble(player, opponent)
-            manager_decision[i]['alpha'] = 2 * np.pi - check_if_ball_is_correct_side(ball, player, your_side)
+            manager_decision[i]['alpha'] = player['alpha'] + check_if_ball_is_correct_side(ball, player, your_side)
         else:
-            manager_decision[i]['alpha'] = check_if_ball_is_correct_side(ball, player, your_side)
+            manager_decision[i]['alpha'] = player['alpha'] + check_if_ball_is_correct_side(ball, player, your_side)
 
     else:
         #make_striker(ball, i, manager_decision, player)
-        manager_decision[i]['alpha'] = 2 * np.pi - check_if_ball_is_correct_side(ball, player, your_side)
+        manager_decision[i]['alpha'] = player['alpha'] + check_if_ball_is_correct_side(ball, player, your_side)
         dist_target = ((player['x'] - target_x) ** 2 + (player['y'] - target_y) ** 2) ** 0.5
         if dist_target > 15:
             target_angle = math.atan2(target_y - player['y'], target_x - player['x'])
