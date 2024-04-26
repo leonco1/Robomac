@@ -65,11 +65,11 @@ team_right_color_position = [477 + shift, 0, 50, 153]
 post_mass = 1e99
 
 # Player stats: Kylian Mbappé, Joshua Kimmich, Joško Gvardiol
-weights = [73, 75, 80]
-radiuses = [22, 23, 24]
-accelerations = [100, 60, 70]
-speeds = [100, 60, 85]
-shot_powers = [65, 70, 50]
+# weights = [73, 75, 80]
+# radiuses = [22, 23, 24]
+# accelerations = [100, 60, 70]
+# speeds = [100, 60, 85]
+# shot_powers = [65, 70, 50]
 
 def get_weight(points):
     if points <= 10:
