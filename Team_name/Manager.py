@@ -21,7 +21,7 @@ left_goal_area = [350, 150, 560, 50] # North East South West
 
 def team_properties():
     properties = dict()
-    player_names = ["Б", "Л", "Г"]
+    player_names = ["Мижимакоски Jr.", "Гверот", "Казанова"]
     properties['team_name'] = "Победа"
     properties['player_names'] = player_names
     properties['image_name'] = 'pobeda.png' # use image resolution 153x153
